@@ -1,7 +1,7 @@
 # Личный проект «TaskForce»
 
-* Студент: [Андрей Печенников](https://up.htmlacademy.ru/nodejs-2/2/user/1842585).
-* Наставник: `Неизвестно`.
+* Студент: [Андрей Печенников](https://htmlacademy.ru/profile/devandy).
+* Наставник: [Дмитрий (sench) Железцов](https://htmlacademy.ru/profile/sench).
 
 ---
 
