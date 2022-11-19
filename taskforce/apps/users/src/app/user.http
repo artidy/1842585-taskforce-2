@@ -1,0 +1,15 @@
+# Create User
+POST http://localhost:3333/api/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "testing@email.com",
+  "firstname": "Kilo",
+  "lastname": "Byte",
+  "city": "Solon",
+  "password": "123456789",
+  "role": "performer",
+  "dataBirth": "12.02.1976"
+}
+
+###
