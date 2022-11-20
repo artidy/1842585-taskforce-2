@@ -12,7 +12,7 @@ export class AuthService {
     private readonly authUserRepository: AuthUserMemoryRepository
   ) {}
 
-  async register(dto: CreateUserDto) {
+  public async register(dto: CreateUserDto) {
     const {email, firstname, lastname, city, role, password, dataBirth, avatar} = dto;
     const user: User = {
       _id: '',
@@ -36,9 +36,5 @@ export class AuthService {
     await userEntity.setPassword(password);
 
     return this.authUserRepository.create(userEntity);
-  }
-
-  async verifyUser() {
-
   }
 }
