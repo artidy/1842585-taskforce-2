@@ -6,12 +6,25 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {AuthUserMemoryRepository} from './auth-user-memory.repository';
 import {AuthUserEntity} from './auth-user.entity';
 import {UpdateUserDto} from './dto/update-user.dto';
+import {LoginUserDto} from './dto/login-user.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly authUserRepository: AuthUserMemoryRepository
   ) {}
+
+  public async login(dto: LoginUserDto) {
+    const existUser: User = await this.authUserRepository.findByEmail(dto.email);
+
+    if (!existUser) {
+      throw new Error('Пользователя не существует');
+    }
+
+    const userEntity = new AuthUserEntity(existUser);
+
+    return userEntity.comparePassword(dto.password);
+  }
 
   public async register(dto: CreateUserDto) {
     const {email, firstname, lastname, city, role, password, dataBirth, avatar} = dto;
