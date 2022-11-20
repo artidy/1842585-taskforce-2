@@ -13,3 +13,13 @@ Content-Type: application/json
 }
 
 ###
+
+# Update User
+PUT http://localhost:3333/api/auth/b0bb910c-59af-4726-af35-29a163e8f32d HTTP/1.1
+Content-Type: application/json
+
+{
+  "password": "505050505"
+}
+
+###

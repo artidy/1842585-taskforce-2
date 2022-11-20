@@ -5,6 +5,7 @@ import {User} from '@taskforce/shared-types';
 import {CreateUserDto} from './dto/create-user.dto';
 import {AuthUserMemoryRepository} from './auth-user-memory.repository';
 import {AuthUserEntity} from './auth-user.entity';
+import {UpdateUserDto} from './dto/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -36,5 +37,30 @@ export class AuthService {
     await userEntity.setPassword(password);
 
     return this.authUserRepository.create(userEntity);
+  }
+
+  public async update(id: string, dto: UpdateUserDto) {
+    const existUser: User = await this.authUserRepository.findById(id);
+
+    if (!existUser) {
+      throw new Error('Пользователя не существует');
+    }
+
+    const user: User = {
+      ...existUser,
+    }
+
+    const keys = Object.keys(dto);
+    keys.forEach((field) => {
+      user[field] = field === 'dataBirth' ? dayjs(dto[field]).toDate() : dto[field];
+    });
+
+    const userEntity = new AuthUserEntity(user);
+
+    if (dto.password) {
+      await userEntity.setPassword(dto.password);
+    }
+
+    return this.authUserRepository.update(id, userEntity);
   }
 }
