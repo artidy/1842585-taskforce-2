@@ -46,12 +46,14 @@ export class CreateUserDto {
 
   @ApiProperty({
     description: 'Аватар пользователя',
+    required: false,
   })
   public avatar?: string;
 
   @ApiProperty({
     description: 'Дата рождения пользователя',
-    example: '22.11.1986'
+    required: false,
+    example: '1986-11-22'
   })
   public dataBirth?: string;
 }

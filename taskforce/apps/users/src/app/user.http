@@ -9,7 +9,7 @@ Content-Type: application/json
   "city": "Solon",
   "password": "123456789",
   "role": "performer",
-  "dataBirth": "12.02.1976"
+  "dataBirth": "1986-11-22"
 }
 
 ###
