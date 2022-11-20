@@ -1,5 +1,5 @@
 import {ApiResponse, ApiTags} from '@nestjs/swagger';
-import {Body, Controller, HttpCode, HttpStatus, Param, Post, Put} from '@nestjs/common';
+import {Body, Controller, Delete, HttpCode, HttpStatus, Param, Post, Put} from '@nestjs/common';
 
 import {CreateUserDto} from './dto/create-user.dto';
 import {AuthService} from './auth.service';
@@ -36,5 +36,14 @@ export class AuthController {
   @Put(':id')
   public async put(@Param('id') id: string, @Body() dto: UpdateUserDto) {
     return await this.authService.update(id, dto);
+  }
+
+  @ApiResponse({
+    status: HttpStatus.NO_CONTENT, description: 'Пользователь успешно удален'
+  })
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  public async delete(@Param('id') id: string) {
+    return await this.authService.delete(id);
   }
 }

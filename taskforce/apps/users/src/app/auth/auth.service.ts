@@ -76,4 +76,8 @@ export class AuthService {
 
     return this.authUserRepository.update(id, userEntity);
   }
+
+  public async delete(id: string) {
+    return this.authUserRepository.destroy(id);
+  }
 }
