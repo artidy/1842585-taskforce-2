@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@taskforce/core": ["libs/core/src/index.ts"],
-      "@taskforce/shared-types": ["libs/shared-types/src/index.ts"]
+      "@taskforce/shared-types": ["libs/shared-types/src/index.ts"],
+      "@taskforce/env": ["environments"],
     }
   },
   "exclude": ["node_modules", "tmp"]
