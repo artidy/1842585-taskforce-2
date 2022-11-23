@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import * as dayjs from 'dayjs';
+import { ConfigService, ConfigType } from '@nestjs/config';
 import {User} from '@taskforce/shared-types';
 
 import {CreateUserDto} from './dto/create-user.dto';
@@ -7,12 +8,17 @@ import {AuthUserMemoryRepository} from './auth-user-memory.repository';
 import {AuthUserEntity} from './auth-user.entity';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
+import databaseConfig from '../../config/database.config';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly authUserRepository: AuthUserMemoryRepository
-  ) {}
+    private readonly authUserRepository: AuthUserMemoryRepository,
+    @Inject(databaseConfig.KEY)
+    private readonly mongoConfig: ConfigType<typeof databaseConfig>
+  ) {
+    console.log(mongoConfig.authBase);
+  }
 
   public async login(dto: LoginUserDto) {
     const existUser: User = await this.authUserRepository.findByEmail(dto.email);
