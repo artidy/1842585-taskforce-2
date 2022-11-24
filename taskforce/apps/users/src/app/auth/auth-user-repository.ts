@@ -17,8 +17,8 @@ export class AuthUserRepository implements CRUDRepository<AuthUserEntity, string
     return (new this.authUserModel(item)).save();
   }
 
-  public async destroy(id: any): Promise<void> {
-    this.authUserModel.deleteOne(id);
+  public async destroy(id: string): Promise<void> {
+    await this.authUserModel.deleteOne({id});
   }
 
   public async findByEmail(email: string): Promise<User|null> {

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as dayjs from 'dayjs';
 import { ConfigType } from '@nestjs/config';
-import {User} from '@taskforce/shared-types';
+import { InitialUser, User } from '@taskforce/shared-types';
 
 import {CreateUserDto} from './dto/create-user.dto';
 import {AuthUserEntity} from './auth-user.entity';
@@ -9,6 +9,7 @@ import {UpdateUserDto} from './dto/update-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
 import databaseConfig from '../../config/database.config';
 import { AuthUserRepository } from './auth-user-repository';
+import { fillEntity, fillObject } from '@taskforce/core';
 
 @Injectable()
 export class AuthService {
@@ -20,6 +21,7 @@ export class AuthService {
 
   public async login(dto: LoginUserDto) {
     const existUser: User = await this.authUserRepository.findByEmail(dto.email);
+    console.log(existUser, dto.email);
 
     if (!existUser) {
       throw new Error('Пользователя не существует');
@@ -31,26 +33,17 @@ export class AuthService {
   }
 
   public async register(dto: CreateUserDto) {
-    const {email, firstname, lastname, city, role, password, dataBirth, avatar} = dto;
-    const user: User = {
-      email,
-      firstname,
-      lastname,
-      city,
-      role,
-      passwordHash: password,
-      dataBirth: dayjs(dataBirth).toDate(),
-      avatar,
-    }
-
-    const existUser = await this.authUserRepository.findByEmail(email);
+    const existUser = await this.authUserRepository.findByEmail(dto.email);
 
     if (existUser) {
       throw new Error('Пользователь уже существует');
     }
 
+    const user: User = new InitialUser();
+    fillEntity<CreateUserDto, User>(dto, user, ['dataBirth']);
+
     const userEntity = new AuthUserEntity(user);
-    await userEntity.setPassword(password);
+    await userEntity.setPassword(dto.password);
 
     return this.authUserRepository.create(userEntity);
   }
@@ -66,10 +59,7 @@ export class AuthService {
       ...existUser,
     }
 
-    const keys = Object.keys(dto);
-    keys.forEach((field) => {
-      user[field] = field === 'dataBirth' ? dayjs(dto[field]).toDate() : dto[field];
-    });
+    fillEntity<UpdateUserDto, User>(dto, user, ['dataBirth']);
 
     const userEntity = new AuthUserEntity(user);
 

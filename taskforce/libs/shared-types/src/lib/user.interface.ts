@@ -1,6 +1,6 @@
 import {UserRole} from '@taskforce/shared-types';
 
-export interface User {
+interface User {
   _id?: string;
   email: string;
   firstname: string;
@@ -10,4 +10,20 @@ export interface User {
   avatar: string;
   role: UserRole;
   passwordHash: string;
+}
+
+class InitialUser implements User {
+  avatar: '';
+  city: '';
+  dataBirth: null;
+  email: '';
+  firstname: '';
+  lastname: '';
+  passwordHash: '';
+  role: null;
+}
+
+export {
+  User,
+  InitialUser
 }
