@@ -44,6 +44,7 @@ export class AuthController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   public async delete(@Param('id') id: string) {
+    console.log(id);
     return await this.authService.delete(id);
   }
 }
