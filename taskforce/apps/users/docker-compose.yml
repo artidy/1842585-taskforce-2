@@ -10,6 +10,12 @@ services:
       MONGO_INITDB_DATABASE: typoteka-users
     ports:
       - 27017:27017
+    healthcheck:
+      test: [ "CMD-SHELL", "mongo mongodb:27017/test --quiet" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     volumes:
       - ./db:/data/db
 
