@@ -14,9 +14,10 @@ model Task {
   id            Int           @id @default(autoincrement())
   title         String
   description   String
-  category      Category
+  categoryId    Int
+  category      Category      @relation(fields: [categoryId], references: [id])
   budget        Int?          @default(0)
-  deadline      DataTime?
+  deadline      DateTime?
   preview       String?
   address       String?
   tags          Tag[]
@@ -24,42 +25,50 @@ model Task {
   performerId   String?
   candidates    Candidate[]
   comments      Comment[]
-  status        Status
-  createdAt     DataTime      @default(now())
-  updatedAt     DataTime      @default(now())
+  statusId      Int
+  status        Status        @relation(fields: [statusId], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
 }
 
 model Category {
   id        Int       @id @default(autoincrement())
   title     String
   tasks     Task[]
-  createdAt DataTime  @default(now())
-  updatedAt DataTime  @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
 }
 
 model Tag {
   id        Int       @id @default(autoincrement())
   title     String
   tasks     Task[]
-  createdAt DataTime  @default(now())
-  updatedAt DataTime  @default(now())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
 }
 
 model Candidate {
   id            Int       @id @default(autoincrement())
   performerId   String
   taskId        Int
-  task          Task      @relation(fileds: [taskId], references: [id])
-  createdAt     DataTime  @default(now())
-  updatedAt     DataTime  @default(now())
+  task          Task      @relation(fields: [taskId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
 }
 
 model Comment {
   id            Int       @id @default(autoincrement())
   userId        String
   taskId        Int
-  task          Task      @relation(fileds: [taskId], references: [id])
+  task          Task      @relation(fields: [taskId], references: [id])
   text          String
-  createdAt     DataTime  @default(now())
-  updatedAt     DataTime  @default(now())
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
 }
+
+model Status {
+  id            Int       @id @default(autoincrement())
+  title         String    @unique
+  tasks         Task[]
+}
+
