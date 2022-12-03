@@ -16,14 +16,50 @@ model Task {
   description   String
   category      Category
   budget        Int?          @default(0)
-  deadline      Data?
+  deadline      DataTime?
   preview       String?
   address       String?
-  tags          Tags[]
-  customer_id   String
-  performer_id  String?
-  candidates    Candidates[]
+  tags          Tag[]
+  customerId    String
+  performerId   String?
+  candidates    Candidate[]
+  comments      Comment[]
   status        Status
   createdAt     DataTime      @default(now())
   updatedAt     DataTime      @default(now())
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  title     String
+  tasks     Task[]
+  createdAt DataTime  @default(now())
+  updatedAt DataTime  @default(now())
+}
+
+model Tag {
+  id        Int       @id @default(autoincrement())
+  title     String
+  tasks     Task[]
+  createdAt DataTime  @default(now())
+  updatedAt DataTime  @default(now())
+}
+
+model Candidate {
+  id            Int       @id @default(autoincrement())
+  performerId   String
+  taskId        Int
+  task          Task      @relation(fileds: [taskId], references: [id])
+  createdAt     DataTime  @default(now())
+  updatedAt     DataTime  @default(now())
+}
+
+model Comment {
+  id            Int       @id @default(autoincrement())
+  userId        String
+  taskId        Int
+  task          Task      @relation(fileds: [taskId], references: [id])
+  text          String
+  createdAt     DataTime  @default(now())
+  updatedAt     DataTime  @default(now())
 }
