@@ -5,7 +5,7 @@ import { Candidate } from './candidate.interface';
 import { Status } from './status.interface';
 
 export interface Task {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   category: Category;
