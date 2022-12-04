@@ -12,7 +12,7 @@ export class TagController {
 
   @Get('/')
   public async index() {
-    const tags = await this.tagService.fundAll();
+    const tags = await this.tagService.findAll();
 
     return fillObject(TagRdo, tags);
   }

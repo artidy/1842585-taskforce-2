@@ -22,7 +22,7 @@ export class TagService {
     return this.statusRepository.findById(id);
   }
 
-  public async fundAll(): Promise<Tag[]> {
+  public async findAll(): Promise<Tag[]> {
     return this.statusRepository.findAll();
   }
 

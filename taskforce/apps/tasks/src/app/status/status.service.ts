@@ -22,7 +22,7 @@ export class StatusService {
     return this.statusRepository.findById(id);
   }
 
-  public async fundAll(): Promise<Status[]> {
+  public async findAll(): Promise<Status[]> {
     return this.statusRepository.findAll();
   }
 

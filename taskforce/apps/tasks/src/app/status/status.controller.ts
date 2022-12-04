@@ -12,7 +12,7 @@ export class StatusController {
 
   @Get('/')
   public async index() {
-    const statuses = await this.statusService.fundAll();
+    const statuses = await this.statusService.findAll();
 
     return fillObject(StatusRdo, statuses);
   }
