@@ -36,7 +36,7 @@ export class StatusRepository implements CRUDRepository<StatusEntity, number, St
     return this.prisma.status.findMany();
   }
 
-  update(id: number, item: StatusEntity): Promise<Status> {
+  public async update(id: number, item: StatusEntity): Promise<Status> {
     return this.prisma.status.update({
       where: {
         id
