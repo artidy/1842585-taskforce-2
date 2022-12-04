@@ -40,7 +40,7 @@ CREATE TABLE "Tag" (
 -- CreateTable
 CREATE TABLE "Candidate" (
     "id" SERIAL NOT NULL,
-    "performerId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
     "taskId" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

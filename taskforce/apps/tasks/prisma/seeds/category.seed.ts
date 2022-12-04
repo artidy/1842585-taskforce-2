@@ -83,13 +83,13 @@ async function fillDb() {
             candidates: {
               create: [
                 {
-                  performerId: '14',
+                  userId: '14',
                 },
                 {
-                  performerId: '1',
+                  userId: '1',
                 },
                 {
-                  performerId: '33',
+                  userId: '33',
                 }
               ]
             },
@@ -136,7 +136,7 @@ async function fillDb() {
             candidates: {
               create: [
                 {
-                  performerId: '23',
+                  userId: '23',
                 }
               ]
             },

@@ -50,7 +50,7 @@ model Tag {
 
 model Candidate {
   id            Int       @id @default(autoincrement())
-  performerId   String
+  userId        String
   taskId        Int
   task          Task      @relation(fields: [taskId], references: [id])
   createdAt     DateTime  @default(now())

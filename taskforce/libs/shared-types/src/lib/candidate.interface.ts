@@ -1,5 +1,5 @@
 export interface Candidate {
-  id?: number;
-  performerId: string;
+  id: number;
+  userId: string;
   taskId: number;
 }
