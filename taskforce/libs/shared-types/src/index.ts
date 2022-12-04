@@ -5,3 +5,4 @@ export * from './lib/tag.interface';
 export * from './lib/comment.interface';
 export * from './lib/task-status.enum';
 export * from './lib/task.interface';
+export * from './lib/status.interface';
