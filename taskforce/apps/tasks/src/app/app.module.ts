@@ -6,6 +6,7 @@ import { StatusModule } from './status/status.module';
 import { TagModule } from './tag/tag.module';
 import { CandidateModule } from './candidate/candidate.module';
 import { CommentModule } from './comment/comment.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { CommentModule } from './comment/comment.module';
     StatusModule,
     TagModule,
     CandidateModule,
-    CommentModule
+    CommentModule,
+    TaskModule
   ],
   controllers: [],
   providers: [],

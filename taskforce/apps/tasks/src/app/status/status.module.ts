@@ -8,6 +8,6 @@ import { StatusService } from './status.service';
   imports: [],
   controllers: [StatusController],
   providers: [StatusRepository, StatusService],
-  exports: [StatusService]
+  exports: [StatusRepository]
 })
 export class StatusModule {}

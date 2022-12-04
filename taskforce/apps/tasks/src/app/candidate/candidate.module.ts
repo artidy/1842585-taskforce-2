@@ -7,7 +7,6 @@ import { CandidateService } from './candidate.service';
 @Module({
   imports: [],
   controllers: [CandidateController],
-  providers: [CandidateRepository, CandidateService],
-  exports: [CandidateService]
+  providers: [CandidateRepository, CandidateService]
 })
 export class CandidateModule {}
