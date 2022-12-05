@@ -1,7 +1,7 @@
-import {Task} from './task.interface';
-
 export interface Comment {
-  id: number;
+  id?: number;
+  userId: string;
+  taskId: number;
   text: string;
-  task: Task;
+  createdAt: Date;
 }
