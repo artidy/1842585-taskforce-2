@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Query
+} from '@nestjs/common';
 
 import { CandidateService } from './candidate.service';
 import { fillObject } from '@taskforce/core';
@@ -25,9 +36,8 @@ export class CandidateController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id') id: string) {
-    const candidateId = parseInt(id, 10);
-    const candidate = await this.candidateService.findById(candidateId);
+  public async show(@Param('id', ParseIntPipe) id: number) {
+    const candidate = await this.candidateService.findById(id);
 
     return fillObject(CandidateRdo, candidate);
   }
@@ -47,9 +57,7 @@ export class CandidateController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id') id: string) {
-    const candidateId = parseInt(id, 10);
-
-    await this.candidateService.delete(candidateId);
+  public async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.candidateService.delete(id);
   }
 }

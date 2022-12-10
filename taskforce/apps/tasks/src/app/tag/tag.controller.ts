@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 
 import { TagService } from './tag.service';
 import { fillObject } from '@taskforce/core';
@@ -26,9 +26,8 @@ export class TagController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id') id: string) {
-    const tagId = parseInt(id, 10);
-    const tag = await this.tagService.findById(tagId);
+  public async show(@Param('id', ParseIntPipe) id: number) {
+    const tag = await this.tagService.findById(id);
 
     return fillObject(TagRdo, tag);
   }
@@ -47,9 +46,8 @@ export class TagController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id') id: string, @Body() dto: UpdateTagDto) {
-    const tagId = parseInt(id, 10);
-    const tag = await this.tagService.update(tagId, dto);
+  public async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateTagDto) {
+    const tag = await this.tagService.update(id, dto);
 
     return fillObject(TagRdo, tag);
   }
@@ -59,9 +57,7 @@ export class TagController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id') id: string) {
-    const tagId = parseInt(id, 10);
-
-    await this.tagService.delete(tagId);
+  public async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.tagService.delete(id);
   }
 }

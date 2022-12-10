@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 
 import { CategoryService } from './category.service';
 import { fillObject } from '@taskforce/core';
@@ -16,9 +16,8 @@ export class CategoryController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id') id: string) {
-    const categoryId = parseInt(id, 10);
-    const category = await this.categoryService.findById(categoryId);
+  public async show(@Param('id', ParseIntPipe) id: number) {
+    const category = await this.categoryService.findById(id);
 
     return fillObject(CategoryRdo, category);
   }
@@ -47,9 +46,8 @@ export class CategoryController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id') id: string, @Body() dto: UpdateCategoryDto) {
-    const categoryId = parseInt(id, 10);
-    const category = await this.categoryService.update(categoryId, dto);
+  public async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCategoryDto) {
+    const category = await this.categoryService.update(id, dto);
 
     return fillObject(CategoryRdo, category);
   }
@@ -59,9 +57,7 @@ export class CategoryController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id') id: string) {
-    const categoryId = parseInt(id, 10);
-
-    await this.categoryService.delete(categoryId);
+  public async delete(@Param('id', ParseIntPipe) id: number) {
+    await this.categoryService.delete(id);
   }
 }
