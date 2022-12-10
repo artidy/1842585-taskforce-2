@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Query
+} from '@nestjs/common';
 
 import { TaskService } from './task.service';
 import { fillObject } from '@taskforce/core';
@@ -6,6 +17,7 @@ import { TaskRdo } from './rdo/task.rdo';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { TaskQuery } from './query/task.query';
 
 @ApiTags('tasks')
 @Controller('tasks')
@@ -16,8 +28,8 @@ export class TaskController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/')
-  public async index() {
-    const tasks = await this.tagService.findAll();
+  public async index(@Query () query: TaskQuery) {
+    const tasks = await this.tagService.findAll(query);
 
     return fillObject(TaskRdo, tasks);
   }
