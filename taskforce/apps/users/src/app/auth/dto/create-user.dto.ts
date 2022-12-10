@@ -1,8 +1,8 @@
-import {UserRole} from '@taskforce/shared-types';
 import {ApiProperty} from '@nestjs/swagger';
-import { IsDate, IsEmail, IsEnum, IsISO8601, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsISO8601, IsOptional, IsString } from 'class-validator';
+
+import {UserRole} from '@taskforce/shared-types';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../../app.constant';
-import { Optional } from '@nestjs/common';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -61,7 +61,7 @@ export class CreateUserDto {
     description: 'Аватар пользователя',
     required: false,
   })
-  @Optional()
+  @IsOptional()
   @IsString()
   public avatar?: string;
 
@@ -70,7 +70,7 @@ export class CreateUserDto {
     required: false,
     example: '1986-11-22'
   })
-  @Optional()
+  @IsOptional()
   @IsISO8601(
     {},
     {

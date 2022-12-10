@@ -1,8 +1,8 @@
-import {UserRole} from '@taskforce/shared-types';
 import {ApiProperty} from '@nestjs/swagger';
-import { IsEmail, IsEnum, IsISO8601, IsString } from 'class-validator';
+import { IsEmail, IsEnum, IsISO8601, IsOptional, IsString } from 'class-validator';
+
+import {UserRole} from '@taskforce/shared-types';
 import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../../app.constant';
-import { Optional } from '@nestjs/common';
 
 export class UpdateUserDto {
   @ApiProperty({
@@ -10,7 +10,7 @@ export class UpdateUserDto {
     required: false,
     example: 'example@mail.com'
   })
-  @Optional()
+  @IsOptional()
   @IsEmail(
     {},
     {
@@ -23,7 +23,7 @@ export class UpdateUserDto {
     required: false,
     example: 'Андрей'
   })
-  @Optional()
+  @IsOptional()
   @IsString()
   public firstname?: string;
 
@@ -32,7 +32,7 @@ export class UpdateUserDto {
     required: false,
     example: 'Иванов'
   })
-  @Optional()
+  @IsOptional()
   @IsString()
   public lastname?: string;
 
@@ -41,7 +41,7 @@ export class UpdateUserDto {
     required: false,
     example: 'Астана'
   })
-  @Optional()
+  @IsOptional()
   @IsString()
   public city?: string;
 
@@ -50,7 +50,7 @@ export class UpdateUserDto {
     required: false,
     example: '123456789'
   })
-  @Optional()
+  @IsOptional()
   @IsString()
   public password?: string;
 
@@ -59,7 +59,7 @@ export class UpdateUserDto {
     required: false,
     example: UserRole.Performer
   })
-  @Optional()
+  @IsOptional()
   @IsEnum(UserRole)
   public role?: UserRole;
 
@@ -67,7 +67,7 @@ export class UpdateUserDto {
     description: 'Аватар пользователя',
     required: false,
   })
-  @Optional()
+  @IsOptional()
   @IsString()
   public avatar?: string;
 
@@ -76,7 +76,7 @@ export class UpdateUserDto {
     required: false,
     example: '1986-11-22'
   })
-  @Optional()
+  @IsOptional()
   @IsISO8601(
     {},
     {
