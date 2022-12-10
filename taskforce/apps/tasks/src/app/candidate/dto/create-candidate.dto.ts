@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsString } from 'class-validator';
 
 export class CreateCandidateDto {
   @ApiProperty({
@@ -6,6 +7,7 @@ export class CreateCandidateDto {
     required: true,
     example: '11'
   })
+  @IsString()
   public userId: string;
 
   @ApiProperty({
@@ -13,5 +15,6 @@ export class CreateCandidateDto {
     required: true,
     example: 1
   })
+  @IsNumber()
   public taskId: number;
 }
