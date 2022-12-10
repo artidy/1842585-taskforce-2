@@ -36,7 +36,7 @@ export class CandidateController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id', ParseIntPipe) id: number) {
+  public async show(@Param('id') id: number) {
     const candidate = await this.candidateService.findById(id);
 
     return fillObject(CandidateRdo, candidate);
@@ -57,7 +57,7 @@ export class CandidateController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id', ParseIntPipe) id: number) {
+  public async delete(@Param('id') id: number) {
     await this.candidateService.delete(id);
   }
 }

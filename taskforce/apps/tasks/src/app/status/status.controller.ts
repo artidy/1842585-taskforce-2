@@ -26,7 +26,7 @@ export class StatusController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id', ParseIntPipe) id: number) {
+  public async show(@Param('id') id: number) {
     const status = await this.statusService.findById(id);
 
     return fillObject(StatusRdo, status);
@@ -46,7 +46,7 @@ export class StatusController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateStatusDto) {
+  public async update(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
     const status = await this.statusService.update(id, dto);
 
     return fillObject(StatusRdo, status);
@@ -57,7 +57,7 @@ export class StatusController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id', ParseIntPipe) id: number) {
+  public async delete(@Param('id') id: number) {
     await this.statusService.delete(id);
   }
 }

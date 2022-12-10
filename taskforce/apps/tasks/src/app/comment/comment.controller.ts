@@ -38,7 +38,7 @@ export class CommentController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id', ParseIntPipe) id: number) {
+  public async show(@Param('id') id: number) {
     const comment = await this.commentService.findById(id);
 
     return fillObject(CommentRdo, comment);
@@ -58,7 +58,7 @@ export class CommentController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateCommentDto) {
+  public async update(@Param('id') id: number, @Body() dto: UpdateCommentDto) {
     const comment = await this.commentService.update(id, dto);
 
     return fillObject(CommentRdo, comment);
@@ -69,7 +69,7 @@ export class CommentController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id', ParseIntPipe) id: number) {
+  public async delete(@Param('id') id: number) {
     await this.commentService.delete(id);
   }
 }

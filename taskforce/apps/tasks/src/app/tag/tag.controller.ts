@@ -26,7 +26,7 @@ export class TagController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id', ParseIntPipe) id: number) {
+  public async show(@Param('id') id: number) {
     const tag = await this.tagService.findById(id);
 
     return fillObject(TagRdo, tag);
@@ -46,7 +46,7 @@ export class TagController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id', ParseIntPipe) id: number, @Body() dto: UpdateTagDto) {
+  public async update(@Param('id') id: number, @Body() dto: UpdateTagDto) {
     const tag = await this.tagService.update(id, dto);
 
     return fillObject(TagRdo, tag);
@@ -57,7 +57,7 @@ export class TagController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id', ParseIntPipe) id: number) {
+  public async delete(@Param('id') id: number) {
     await this.tagService.delete(id);
   }
 }
