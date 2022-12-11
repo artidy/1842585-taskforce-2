@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class CreateTagDto {
   @ApiProperty({
@@ -6,5 +7,6 @@ export class CreateTagDto {
     required: true,
     example: 'разработка'
   })
+  @IsString()
   public title: string;
 }

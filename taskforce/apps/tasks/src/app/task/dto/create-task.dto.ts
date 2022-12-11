@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsISO8601, IsNumber, IsOptional, IsString } from 'class-validator';
+
+import { DATE_DEADLINE_NOT_VALID } from '../../app.constant';
 
 export class CreateTaskDto {
   @ApiProperty({
@@ -6,6 +9,7 @@ export class CreateTaskDto {
     required: true,
     example: 'Новая задача'
   })
+  @IsString()
   title: string;
 
   @ApiProperty({
@@ -13,6 +17,7 @@ export class CreateTaskDto {
     required: true,
     example: 'Это очень сложная задача, не стоит ее выполнять!'
   })
+  @IsString()
   description: string;
 
   @ApiProperty({
@@ -20,6 +25,7 @@ export class CreateTaskDto {
     required: true,
     example: 1
   })
+  @IsNumber()
   categoryId: number;
 
   @ApiProperty({
@@ -27,12 +33,18 @@ export class CreateTaskDto {
     required: false,
     example: 500000000
   })
+  @IsOptional()
+  @IsNumber()
   budget?: number;
 
   @ApiProperty({
     description: 'Крайняя дата выполенения задачи',
     required: false,
     example: '2022-12-15 10:00:00'
+  })
+  @IsOptional()
+  @IsISO8601({}, {
+    message: DATE_DEADLINE_NOT_VALID
   })
   deadline?: Date;
 
@@ -41,6 +53,8 @@ export class CreateTaskDto {
     required: false,
     example: 'test.jpg'
   })
+  @IsOptional()
+  @IsString()
   preview?: string;
 
   @ApiProperty({
@@ -48,6 +62,8 @@ export class CreateTaskDto {
     required: false,
     example: 'Новый город'
   })
+  @IsOptional()
+  @IsString()
   address?: string;
 
   @ApiProperty({
@@ -55,6 +71,7 @@ export class CreateTaskDto {
     required: true,
     example: '12'
   })
+  @IsString()
   customerId: string;
 
   @ApiProperty({
@@ -62,5 +79,6 @@ export class CreateTaskDto {
     required: true,
     example: 2
   })
+  @IsNumber()
   statusId: number;
 }

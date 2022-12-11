@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Patch, Post } from '@nestjs/common';
 
 import { StatusService } from './status.service';
 import { fillObject } from '@taskforce/core';
@@ -26,9 +26,8 @@ export class StatusController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id') id: string) {
-    const statusId = parseInt(id, 10);
-    const status = await this.statusService.findById(statusId);
+  public async show(@Param('id') id: number) {
+    const status = await this.statusService.findById(id);
 
     return fillObject(StatusRdo, status);
   }
@@ -47,9 +46,8 @@ export class StatusController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id') id: string, @Body() dto: UpdateStatusDto) {
-    const statusId = parseInt(id, 10);
-    const status = await this.statusService.update(statusId, dto);
+  public async update(@Param('id') id: number, @Body() dto: UpdateStatusDto) {
+    const status = await this.statusService.update(id, dto);
 
     return fillObject(StatusRdo, status);
   }
@@ -59,9 +57,7 @@ export class StatusController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id') id: string) {
-    const statusId = parseInt(id, 10);
-
-    await this.statusService.delete(statusId);
+  public async delete(@Param('id') id: number) {
+    await this.statusService.delete(id);
   }
 }

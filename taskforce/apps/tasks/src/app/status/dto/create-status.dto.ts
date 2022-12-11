@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 
 export class CreateStatusDto {
   @ApiProperty({
@@ -6,5 +7,6 @@ export class CreateStatusDto {
     required: true,
     example: 'В работе'
   })
+  @IsString()
   public title: string;
 }

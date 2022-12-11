@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNumber, IsString } from 'class-validator';
 
 export class UpdateCommentDto {
   @ApiProperty({
@@ -6,6 +7,7 @@ export class UpdateCommentDto {
     required: true,
     example: '11'
   })
+  @IsString()
   userId: string;
 
   @ApiProperty({
@@ -13,6 +15,7 @@ export class UpdateCommentDto {
     required: true,
     example: 1
   })
+  @IsNumber()
   taskId: number;
 
   @ApiProperty({
@@ -20,5 +23,6 @@ export class UpdateCommentDto {
     required: true,
     example: 'Это тестовый комментарий'
   })
+  @IsString()
   text: string;
 }

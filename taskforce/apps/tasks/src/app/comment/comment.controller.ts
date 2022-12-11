@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  Query
+} from '@nestjs/common';
 
 import { CommentService } from './comment.service';
 import { fillObject } from '@taskforce/core';
@@ -26,9 +38,8 @@ export class CommentController {
     status: HttpStatus.OK, description: 'Данные успешно получены'
   })
   @Get('/:id')
-  public async show(@Param('id') id: string) {
-    const commentId = parseInt(id, 10);
-    const comment = await this.commentService.findById(commentId);
+  public async show(@Param('id') id: number) {
+    const comment = await this.commentService.findById(id);
 
     return fillObject(CommentRdo, comment);
   }
@@ -47,9 +58,8 @@ export class CommentController {
     status: HttpStatus.OK, description: 'Данные успешно обновлены'
   })
   @Patch('/:id')
-  public async update(@Param('id') id: string, @Body() dto: UpdateCommentDto) {
-    const commentId = parseInt(id, 10);
-    const comment = await this.commentService.update(commentId, dto);
+  public async update(@Param('id') id: number, @Body() dto: UpdateCommentDto) {
+    const comment = await this.commentService.update(id, dto);
 
     return fillObject(CommentRdo, comment);
   }
@@ -59,9 +69,7 @@ export class CommentController {
   })
   @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  public async delete(@Param('id') id: string) {
-    const commentId = parseInt(id, 10);
-
-    await this.commentService.delete(commentId);
+  public async delete(@Param('id') id: number) {
+    await this.commentService.delete(id);
   }
 }

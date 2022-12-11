@@ -4,6 +4,8 @@ import { CRUDRepository } from '@taskforce/core';
 import { TaskEntity } from './task.entity';
 import { Task } from '@taskforce/shared-types';
 import { PrismaService } from '../prisma/prisma.service';
+import { TaskQuery } from './query/task.query';
+import { SORT_DIRECTION, SortTypes } from '../app.constant';
 
 @Injectable()
 export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> {
@@ -60,15 +62,42 @@ export class TaskRepository implements CRUDRepository<TaskEntity, number, Task> 
     });
   }
 
-  public async findAll(): Promise<Task[]> {
+  public async findAll({ limit, category, tag, address, status, sortType, page }: TaskQuery): Promise<Task[]> {
     return this.prisma.task.findMany({
+      where: {
+        address: address,
+        category: {
+          id: category
+        },
+        tags: {
+          some: {
+            id: tag
+          }
+        },
+        status: {
+          id: status
+        }
+      },
+      take: limit,
       include: {
         category: true,
         candidates: true,
         tags: true,
         comments: true,
         status: true
-      }
+      },
+      orderBy: [
+        {
+          createdAt: sortType === SortTypes.CreatedAt ? SORT_DIRECTION : undefined,
+          comments: sortType === SortTypes.Comments ? {
+            _count: SORT_DIRECTION
+          } : undefined,
+          candidates: sortType === SortTypes.Candidates ? {
+            _count: SORT_DIRECTION
+          } : undefined,
+        },
+      ],
+      skip: page > 0 ? limit * (page - 1) : undefined,
     });
   }
 

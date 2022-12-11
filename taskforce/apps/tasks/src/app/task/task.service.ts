@@ -7,6 +7,7 @@ import { TaskEntity } from './task.entity';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { CategoryRepository } from '../category/category.repository';
 import { StatusRepository } from '../status/status.repository';
+import { TaskQuery } from './query/task.query';
 
 @Injectable()
 export class TaskService {
@@ -54,8 +55,8 @@ export class TaskService {
     return this.taskRepository.findById(id);
   }
 
-  public async findAll(): Promise<Task[]> {
-    return this.taskRepository.findAll();
+  public async findAll(query: TaskQuery): Promise<Task[]> {
+    return this.taskRepository.findAll(query);
   }
 
   public async delete(id: number): Promise<void> {

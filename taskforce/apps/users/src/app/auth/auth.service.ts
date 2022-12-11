@@ -1,5 +1,5 @@
-import { Inject, Injectable } from '@nestjs/common';
-import * as dayjs from 'dayjs';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import { InitialUser, User } from '@taskforce/shared-types';
 
@@ -9,27 +9,46 @@ import {UpdateUserDto} from './dto/update-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
 import databaseConfig from '../../config/database.config';
 import { AuthUserRepository } from './auth-user-repository';
-import { fillEntity, fillObject } from '@taskforce/core';
+import { fillEntity } from '@taskforce/core';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly authUserRepository: AuthUserRepository,
+    private readonly jwtService: JwtService,
     @Inject(databaseConfig.KEY)
     private readonly mongoConfig: ConfigType<typeof databaseConfig>
   ) {}
 
-  public async login(dto: LoginUserDto) {
+  public async checkUser(dto: LoginUserDto) {
     const existUser: User = await this.authUserRepository.findByEmail(dto.email);
     console.log(existUser, dto.email);
 
     if (!existUser) {
-      throw new Error('Пользователя не существует');
+      throw new UnauthorizedException('Пользователя не существует');
     }
 
     const userEntity = new AuthUserEntity(existUser);
 
-    return userEntity.comparePassword(dto.password);
+    if (! await userEntity.comparePassword(dto.password)) {
+      throw new UnauthorizedException('Неверный пароль пользователя');
+    }
+
+    return userEntity.toObject();
+  }
+
+  public async login(user: User) {
+    const payload = {
+      sub: user._id,
+      email: user.email,
+      role: user.role,
+      lastname: user.lastname,
+      firstname: user.firstname,
+    }
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 
   public async register(dto: CreateUserDto) {

@@ -1,11 +1,19 @@
-import {UserRole} from '@taskforce/shared-types';
 import {ApiProperty} from '@nestjs/swagger';
+import { IsEmail, IsEnum, IsISO8601, IsOptional, IsString } from 'class-validator';
+
+import {UserRole} from '@taskforce/shared-types';
+import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../../app.constant';
 
 export class CreateUserDto {
   @ApiProperty({
     description: 'Уникальный email пользователя',
     required: true,
     example: 'example@mail.com'
+  })
+  @IsEmail(
+    {},
+    {
+      message: AUTH_USER_EMAIL_NOT_VALID
   })
   public email: string;
 
@@ -14,6 +22,7 @@ export class CreateUserDto {
     required: true,
     example: 'Андрей'
   })
+  @IsString()
   public firstname: string;
 
   @ApiProperty({
@@ -21,6 +30,7 @@ export class CreateUserDto {
     required: true,
     example: 'Иванов'
   })
+  @IsString()
   public lastname: string;
 
   @ApiProperty({
@@ -28,6 +38,7 @@ export class CreateUserDto {
     required: true,
     example: 'Астана'
   })
+  @IsString()
   public city: string;
 
   @ApiProperty({
@@ -35,6 +46,7 @@ export class CreateUserDto {
     required: true,
     example: '123456789'
   })
+  @IsString()
   public password: string;
 
   @ApiProperty({
@@ -42,18 +54,27 @@ export class CreateUserDto {
     required: true,
     example: UserRole.Performer
   })
+  @IsEnum(UserRole)
   public role: UserRole;
 
   @ApiProperty({
     description: 'Аватар пользователя',
     required: false,
   })
+  @IsOptional()
+  @IsString()
   public avatar?: string;
 
   @ApiProperty({
     description: 'Дата рождения пользователя',
     required: false,
     example: '1986-11-22'
+  })
+  @IsOptional()
+  @IsISO8601(
+    {},
+    {
+      message: AUTH_USER_DATE_BIRTH_NOT_VALID
   })
   public dataBirth?: string;
 }
