@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@nestjs-modules/mailer": "1.8.1",
     "@nestjs/common": "9.0.0",
     "@nestjs/config": "2.2.0",
     "@nestjs/core": "9.0.0",
@@ -43,6 +44,7 @@
     "@types/bcrypt": "5.0.0",
     "@types/jest": "28.1.1",
     "@types/node": "18.7.1",
+    "@types/nodemailer": "6.4.6",
     "@types/passport": "1.0.11",
     "@types/passport-jwt": "3.0.7",
     "@typescript-eslint/eslint-plugin": "5.36.1",
