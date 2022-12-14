@@ -1,8 +1,5 @@
-import { ConfigService, registerAs } from '@nestjs/config';
-import { PugAdapter } from '@nestjs-modules/mailer/dist/adapters/pug.adapter';
+import { registerAs } from '@nestjs/config';
 import { MailerOptions } from '@nestjs-modules/mailer';
-
-const TEMPLATES_DIRECTORY = '/template/';
 
 export const mailOptions = registerAs('mail', () => ({
   server: process.env.SMTP_SERVER,
@@ -12,28 +9,19 @@ export const mailOptions = registerAs('mail', () => ({
   password: process.env.EMAIL_PASSWORD
 }));
 
-export async function getMailConfig(configService: ConfigService): Promise<MailerOptions> {
+export function getMailConfig(): MailerOptions {
+  const configService = mailOptions();
+
   return {
     transport: {
-      host: configService.get<string>('mail.server'),
-      port: configService.get<number>('mail.port'),
+      host: configService.server,
+      port: +configService.port,
       ignoreTLS: true,
       secure: false,
-      auth: {
-        user: configService.get<string>('mail.user'),
-        pass: configService.get<string>('mail.password'),
-      },
     },
     defaults: {
-      from: `"No Reply" <${ configService.get<string>('mail.email') }>`,
+      from: `"No Reply" <${ configService.email }>`,
     },
     preview: true,
-    template: {
-      dir: process.cwd() + TEMPLATES_DIRECTORY,
-      adapter: new PugAdapter(),
-      options: {
-        strict: true,
-      },
-    },
   }
 }

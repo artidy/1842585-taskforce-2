@@ -7,3 +7,4 @@ export * from './lib/task-status.enum';
 export * from './lib/task.interface';
 export * from './lib/status.interface';
 export * from './lib/candidate.interface';
+export * from './lib/mail.interface';

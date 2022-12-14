@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from './app.constant';
 import { mailOptions } from '../config/mail.config';
 import { validateEnvironments } from './env.validation';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { validateEnvironments } from './env.validation';
       load: [ mailOptions ],
       validate: validateEnvironments,
     }),
+    MailModule
   ],
   controllers: [],
   providers: [],
