@@ -13,6 +13,10 @@ export class SubscriberRepository implements CRUDRepository<SubscriberEntity, st
     @InjectModel(SubscriberModel.name) private readonly subscriberModel: Model<SubscriberModel>
   ) {}
 
+  public async findAll(): Promise<Subscriber[]> {
+    return this.subscriberModel.find();
+  }
+
   public async create(subscriber: SubscriberEntity): Promise<Subscriber> {
     return (new this.subscriberModel(subscriber)).save();
   }

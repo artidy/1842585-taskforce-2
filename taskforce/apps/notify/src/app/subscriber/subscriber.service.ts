@@ -14,6 +14,10 @@ export class SubscriberService {
     private readonly subscriberRepository: SubscriberRepository
   ) {}
 
+  public async findAll(): Promise<Subscriber[]> {
+    return this.subscriberRepository.findAll();
+  }
+
   public async add(dto: CreateSubscriberDto): Promise<Subscriber> {
     const existSubscriber = await this.subscriberRepository.findByEmail(dto.email);
 
