@@ -25,6 +25,10 @@ export class SubscriberRepository implements CRUDRepository<SubscriberEntity, st
     return this.subscriberModel.findById(id);
   }
 
+  public async findByEmail(email: string): Promise<Subscriber | null> {
+    return this.subscriberModel.findOne({ email });
+  }
+
   public async update(id: string, item: SubscriberEntity): Promise<Subscriber> {
     return this.subscriberModel.findByIdAndUpdate(id, item.toObject(), { new: true }).exec();
   }

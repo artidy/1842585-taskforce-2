@@ -9,11 +9,11 @@ function getMongoConnectionString({username, password, host, port, databaseName,
   return `mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }
 
-function fillEntity<D, T>(dto: D, entity: T, dataFields: string[]): void {
+function fillEntity<D, T>(dto: D, entity: T, dateFields: string[] = []): void {
   const keys = Object.keys(dto);
 
   keys.forEach((field) => {
-    entity[field] = dataFields.includes(field) ? dayjs(dto[field]).toDate() : dto[field];
+    entity[field] = dateFields.includes(field) ? dayjs(dto[field]).toDate() : dto[field];
   });
 }
 
