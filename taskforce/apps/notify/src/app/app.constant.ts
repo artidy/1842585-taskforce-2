@@ -8,7 +8,7 @@ enum EnvValidationMessage {
 
 const MIN_PORT = 0;
 const MAX_PORT = 65535;
-const ENV_FILE_PATH = 'environments/.mail.env';
+const ENV_FILE_PATH = 'environments/.notify.env';
 
 export {
   EnvValidationMessage,
