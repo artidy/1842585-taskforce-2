@@ -7,7 +7,7 @@ import { getMailConfig } from '../../config/mail.config';
 
 @Module({
   imports: [
-    MailerModule.forRoot(getMailConfig())
+    MailerModule.forRootAsync(getMailConfig())
   ],
   controllers: [MailController],
   providers: [MailService],

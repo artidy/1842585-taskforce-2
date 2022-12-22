@@ -1,5 +1,5 @@
-import { registerAs } from '@nestjs/config';
-import { MailerOptions } from '@nestjs-modules/mailer';
+import { ConfigService, registerAs } from '@nestjs/config';
+import { MailerAsyncOptions } from '@nestjs-modules/mailer/dist/interfaces/mailer-async-options.interface';
 
 export const mailOptions = registerAs('mail', () => ({
   server: process.env.SMTP_SERVER,
@@ -9,19 +9,20 @@ export const mailOptions = registerAs('mail', () => ({
   password: process.env.EMAIL_PASSWORD
 }));
 
-export function getMailConfig(): MailerOptions {
-  const configService = mailOptions();
-
+export function getMailConfig(): MailerAsyncOptions {
   return {
-    transport: {
-      host: configService.server,
-      port: +configService.port,
-      ignoreTLS: true,
-      secure: false,
-    },
-    defaults: {
-      from: `"No Reply" <${ configService.email }>`,
-    },
-    preview: true,
+    useFactory: async (configService: ConfigService) => ({
+      transport: {
+        host: configService.get<string>('mail.server'),
+        port: configService.get<number>('mail.port'),
+        ignoreTLS: true,
+        secure: false,
+      },
+      defaults: {
+        from: `"No Reply" <${ configService.get<string>('mail.email') }>`,
+      },
+      preview: true,
+    }),
+    inject: [ConfigService]
   }
 }
