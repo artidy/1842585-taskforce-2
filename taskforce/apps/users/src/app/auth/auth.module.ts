@@ -9,7 +9,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AuthUserModel, AuthUserSchema } from './auth-user.model';
 import { AuthUserRepository } from './auth-user-repository';
-import { getJwtConfig } from '../../config/jwt.config';
+import { getJwtConfig } from '@taskforce/core';
 
 @Module({
   imports: [

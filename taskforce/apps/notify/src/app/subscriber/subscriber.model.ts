@@ -18,9 +18,9 @@ class SubscriberModel extends Document implements Subscriber {
   firstname: string;
 }
 
-const EmailSubscriberSchema = SchemaFactory.createForClass(SubscriberModel);
+const SubscriberSchema = SchemaFactory.createForClass(SubscriberModel);
 
 export {
   SubscriberModel,
-  EmailSubscriberSchema,
+  SubscriberSchema,
 }
