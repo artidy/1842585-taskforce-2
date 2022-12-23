@@ -4,9 +4,9 @@ import { SubscriberRepository } from './subscriber.repository';
 import { SubscriberEntity } from './subscriber.entity';
 import { Subscriber } from '@taskforce/shared-types';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
-import { SUBSCRIBER_EXIST, SUBSCRIBER_NOT_EXIST } from '../app.const';
 import { fillEntity } from '@taskforce/core';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
+import { SUBSCRIBER_EXIST, SUBSCRIBER_NOT_EXIST } from '../app.constant';
 
 @Injectable()
 export class SubscriberService {

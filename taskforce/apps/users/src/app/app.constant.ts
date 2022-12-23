@@ -5,6 +5,10 @@ enum EnvValidationMessage {
   DBUserRequired = 'MongoDB user is required',
   DBPasswordRequired = 'MongoDB password is required',
   DBBaseAuthRequired = 'MongoDB authentication base is required',
+  RabbitUserRequired = 'Rabbit user incorrect',
+  RabbitPasswordRequired = 'Rabbit password incorrect',
+  RabbitHostRequired = 'Rabbit host incorrect',
+  RabbitQueueRequired = 'Rabbit queue incorrect',
 }
 
 const ENV_FILE_PATH = 'environments/.users.env';

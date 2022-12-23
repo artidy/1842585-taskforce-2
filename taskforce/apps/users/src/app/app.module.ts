@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
 import { databaseConfig, getMongoDbConfig, jwtOptions } from '@taskforce/core';
+import { rabbitmqOptions } from '../config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { databaseConfig, getMongoDbConfig, jwtOptions } from '@taskforce/core';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, jwtOptions],
+      load: [databaseConfig, jwtOptions, rabbitmqOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(

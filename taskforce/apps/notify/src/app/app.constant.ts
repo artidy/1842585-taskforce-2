@@ -19,10 +19,16 @@ enum EnvValidationMessage {
 const MIN_PORT = 0;
 const MAX_PORT = 65535;
 const ENV_FILE_PATH = 'environments/.notify.env';
+const SUBSCRIBER_EMAIL_NOT_VALID = 'Неверный формат email';
+const SUBSCRIBER_EXIST = 'Подписчик уже существует';
+const SUBSCRIBER_NOT_EXIST = 'Подписчик не существует';
 
 export {
   EnvValidationMessage,
   MIN_PORT,
   MAX_PORT,
-  ENV_FILE_PATH
+  ENV_FILE_PATH,
+  SUBSCRIBER_EMAIL_NOT_VALID,
+  SUBSCRIBER_EXIST,
+  SUBSCRIBER_NOT_EXIST
 }

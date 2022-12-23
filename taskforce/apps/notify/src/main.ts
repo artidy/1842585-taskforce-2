@@ -9,7 +9,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config';
-import { getRabbitmqConfig } from './config/rabbitmq.config';
+import { getRabbitmqConfig } from '@taskforce/core';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

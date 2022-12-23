@@ -7,9 +7,8 @@ import {CreateUserDto} from './dto/create-user.dto';
 import {AuthUserEntity} from './auth-user.entity';
 import {UpdateUserDto} from './dto/update-user.dto';
 import {LoginUserDto} from './dto/login-user.dto';
-import databaseConfig from '../../config/database.config';
 import { AuthUserRepository } from './auth-user-repository';
-import { fillEntity } from '@taskforce/core';
+import { databaseConfig, fillEntity } from '@taskforce/core';
 
 @Injectable()
 export class AuthService {
