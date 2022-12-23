@@ -2,6 +2,7 @@ import {ClassConstructor, plainToInstance} from 'class-transformer';
 import * as dayjs from 'dayjs';
 import { ConfigService } from '@nestjs/config';
 import { RmqOptions, Transport } from '@nestjs/microservices';
+import { CommandEvent } from '@taskforce/shared-types';
 
 function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
   return plainToInstance(someDto, plainObject, { excludeExtraneousValues: true });
@@ -40,9 +41,14 @@ function getRabbitmqConfig(configService: ConfigService): RmqOptions {
   }
 }
 
+function createEvent(commandEvent: CommandEvent) {
+  return { cmd: commandEvent };
+}
+
 export {
   fillObject,
   getMongoConnectionString,
   fillEntity,
-  getRabbitmqConfig
+  getRabbitmqConfig,
+  createEvent
 }

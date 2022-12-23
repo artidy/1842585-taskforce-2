@@ -1,14 +1,16 @@
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
-import { InitialUser, User } from '@taskforce/shared-types';
+import { ClientProxy } from '@nestjs/microservices';
 
-import {CreateUserDto} from './dto/create-user.dto';
-import {AuthUserEntity} from './auth-user.entity';
-import {UpdateUserDto} from './dto/update-user.dto';
-import {LoginUserDto} from './dto/login-user.dto';
+import { CommandEvent, InitialUser, User, UserRole } from '@taskforce/shared-types';
+import { CreateUserDto } from './dto/create-user.dto';
+import { AuthUserEntity } from './auth-user.entity';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 import { AuthUserRepository } from './auth-user-repository';
-import { databaseConfig, fillEntity } from '@taskforce/core';
+import { createEvent, databaseConfig, fillEntity } from '@taskforce/core';
+import { RABBITMQ_SERVICE_NAME } from '../app.constant';
 
 @Injectable()
 export class AuthService {
@@ -16,12 +18,12 @@ export class AuthService {
     private readonly authUserRepository: AuthUserRepository,
     private readonly jwtService: JwtService,
     @Inject(databaseConfig.KEY)
-    private readonly mongoConfig: ConfigType<typeof databaseConfig>
+    private readonly mongoConfig: ConfigType<typeof databaseConfig>,
+    @Inject(RABBITMQ_SERVICE_NAME) private readonly rabbitClient: ClientProxy
   ) {}
 
   public async checkUser(dto: LoginUserDto) {
     const existUser: User = await this.authUserRepository.findByEmail(dto.email);
-    console.log(existUser, dto.email);
 
     if (!existUser) {
       throw new UnauthorizedException('Пользователя не существует');
@@ -63,7 +65,20 @@ export class AuthService {
     const userEntity = new AuthUserEntity(user);
     await userEntity.setPassword(dto.password);
 
-    return this.authUserRepository.create(userEntity);
+    const createdUser = await this.authUserRepository.create(userEntity);
+
+    if (createdUser.role === UserRole.Performer) {
+      this.rabbitClient.emit(
+        createEvent(CommandEvent.AddSubscriber),
+        {
+          id: createdUser._id,
+          firstname: createdUser.firstname,
+          email: createdUser.email
+        }
+      )
+    }
+
+    return createdUser;
   }
 
   public async update(id: string, dto: UpdateUserDto) {
