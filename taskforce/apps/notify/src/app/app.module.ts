@@ -8,6 +8,7 @@ import { MailModule } from './mail/mail.module';
 import { SubscriberModule } from './subscriber/subscriber.module';
 import { databaseConfig, getMongoDbConfig } from '@taskforce/core';
 import { MongooseModule } from '@nestjs/mongoose';
+import { rabbitmqOptions } from '../config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { MongooseModule } from '@nestjs/mongoose';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [ mailOptions, databaseConfig ],
+      load: [ mailOptions, databaseConfig, rabbitmqOptions ],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(
