@@ -4,10 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { AuthModule } from './auth/auth.module';
 import { ENV_FILE_PATH } from './app.constant';
-import databaseConfig from '../config/database.config';
 import { validateEnvironments } from './env.validation';
-import { getMongoDbConfig } from '../config/mongodb.config';
-import { jwtOptions } from '../config/jwt.config';
+import { databaseConfig, getMongoDbConfig, jwtOptions } from '@taskforce/core';
+import { rabbitmqOptions } from '../config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -15,7 +14,7 @@ import { jwtOptions } from '../config/jwt.config';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, jwtOptions],
+      load: [databaseConfig, jwtOptions, rabbitmqOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(

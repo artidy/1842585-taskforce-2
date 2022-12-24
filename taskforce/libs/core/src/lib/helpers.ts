@@ -1,5 +1,8 @@
 import {ClassConstructor, plainToInstance} from 'class-transformer';
 import * as dayjs from 'dayjs';
+import { ConfigService } from '@nestjs/config';
+import { RmqOptions, Transport } from '@nestjs/microservices';
+import { CommandEvent } from '@taskforce/shared-types';
 
 function fillObject<T, V>(someDto: ClassConstructor<T>, plainObject: V) {
   return plainToInstance(someDto, plainObject, { excludeExtraneousValues: true });
@@ -9,16 +12,43 @@ function getMongoConnectionString({username, password, host, port, databaseName,
   return `mongodb://${username}:${password}@${host}:${port}/${databaseName}?authSource=${authDatabase}`;
 }
 
-function fillEntity<D, T>(dto: D, entity: T, dataFields: string[]): void {
+function fillEntity<D, T>(dto: D, entity: T, dateFields: string[] = []): void {
   const keys = Object.keys(dto);
 
   keys.forEach((field) => {
-    entity[field] = dataFields.includes(field) ? dayjs(dto[field]).toDate() : dto[field];
+    entity[field] = dateFields.includes(field) ? dayjs(dto[field]).toDate() : dto[field];
   });
+}
+
+function getRabbitmqConfig(configService: ConfigService): RmqOptions {
+  const user = configService.get<string>('rmq.user');
+  const password = configService.get<string>('rmq.password');
+  const host = configService.get<string>('rmq.host');
+  const queue = configService.get<string>('rmq.queue');
+  const url = `amqp://${user}:${password}@${host}`;
+
+  return {
+    transport: Transport.RMQ,
+    options: {
+      urls: [url],
+      queue,
+      persistent: true,
+      noAck: true,
+      queueOptions: {
+        durable: true,
+      }
+    }
+  }
+}
+
+function createEvent(commandEvent: CommandEvent) {
+  return { cmd: commandEvent };
 }
 
 export {
   fillObject,
   getMongoConnectionString,
-  fillEntity
+  fillEntity,
+  getRabbitmqConfig,
+  createEvent
 }

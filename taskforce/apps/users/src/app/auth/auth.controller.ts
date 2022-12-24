@@ -32,7 +32,6 @@ export class AuthController {
     });
   }
 
-  @UseGuards(JwtAuthGuard)
   @ApiResponse({
     status: HttpStatus.CREATED, description: 'Новый пользователь создан'
   })

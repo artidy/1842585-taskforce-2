@@ -35,6 +35,26 @@ class EnvironmentsConfig {
     message: EnvValidationMessage.DBBaseAuthRequired
   })
   public MONGO_AUTH_BASE: string;
+
+  @IsString({
+    message: EnvValidationMessage.RabbitUserRequired
+  })
+  public RABBIT_USER: string;
+
+  @IsString({
+    message: EnvValidationMessage.RabbitPasswordRequired
+  })
+  public RABBIT_PASSWORD: string;
+
+  @IsString({
+    message: EnvValidationMessage.RabbitHostRequired
+  })
+  public RABBIT_HOST: string;
+
+  @IsString({
+    message: EnvValidationMessage.RabbitQueueRequired
+  })
+  public RABBIT_USERS_SERVICE_QUEUE: string;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {
