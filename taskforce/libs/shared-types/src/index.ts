@@ -10,3 +10,4 @@ export * from './lib/candidate.interface';
 export * from './lib/mail.interface';
 export * from './lib/subscriber.interface';
 export * from './lib/command-event.enum';
+export * from './lib/file.interface';

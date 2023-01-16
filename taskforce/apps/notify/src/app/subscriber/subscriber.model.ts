@@ -15,7 +15,7 @@ class SubscriberModel extends Document implements Subscriber {
   public email: string;
 
   @Prop()
-  firstname: string;
+  public firstname: string;
 }
 
 const SubscriberSchema = SchemaFactory.createForClass(SubscriberModel);
