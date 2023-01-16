@@ -32,6 +32,16 @@ class EnvironmentsConfig {
     message: EnvValidationMessage.DBBaseAuthRequired
   })
   public MONGO_AUTH_BASE: string;
+
+  @IsString({
+    message: EnvValidationMessage.UploadDirectoryRequired
+  })
+  public UPLOAD_DIRECTORY: string;
+
+  @IsNumber({}, {
+    message: EnvValidationMessage.MaxFileSize
+  })
+  public MAX_FILE_SIZE: number;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {

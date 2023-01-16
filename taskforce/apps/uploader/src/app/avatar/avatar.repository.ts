@@ -25,6 +25,10 @@ export class AvatarRepository implements CRUDRepository<AvatarEntity, string, Fi
     return this.avatarModel.findOne({ id });
   }
 
+  public async findByUserId(userId: string): Promise<File | null> {
+    return this.avatarModel.findOne({ userId });
+  }
+
   public async update(id: string, avatar: AvatarEntity): Promise<File> {
     return this.avatarModel.findByIdAndUpdate({ id }, avatar.toObject(), { new: true }).exec();
   }
