@@ -1,4 +1,4 @@
-import { Subscriber, User } from '@taskforce/shared-types';
+import { Subscriber } from '@taskforce/shared-types';
 
 export class SubscriberEntity implements Subscriber {
   email: string;

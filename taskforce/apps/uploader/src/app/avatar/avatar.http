@@ -1,0 +1,33 @@
+# Add user avatar
+POST localhost:5555/api/avatar/6394e5f001b51973a4a24dfd HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="example.png"
+Content-Type: image/png
+
+< ./example.png
+--boundary
+
+###
+
+# Update user avatar
+PATCH localhost:5555/api/avatar/6394e5f001b51973a4a24dfd HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="avatar"; filename="example.png"
+Content-Type: image/png
+
+< ./example.png
+--boundary
+
+###
+
+# Delete user avatar
+DELETE localhost:5555/api/avatar/6394e5f001b51973a4a24dfd HTTP/1.1
+
+###
+
+# Get user avatar
+GET localhost:5555/api/avatar/6394e5f001b51973a4a24dfd HTTP/1.1
