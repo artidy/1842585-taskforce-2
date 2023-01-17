@@ -17,8 +17,8 @@ export class AvatarRepository implements CRUDRepository<AvatarEntity, string, Fi
     return (new this.avatarModel(avatar)).save();
   }
 
-  public async destroy(id: string): Promise<void> {
-    await this.avatarModel.deleteOne({ id });
+  public async destroy(userId: string): Promise<void> {
+    await this.avatarModel.deleteOne({ userId });
   }
 
   public async findById(id: string): Promise<File | null> {
@@ -29,7 +29,10 @@ export class AvatarRepository implements CRUDRepository<AvatarEntity, string, Fi
     return this.avatarModel.findOne({ userId });
   }
 
-  public async update(id: string, avatar: AvatarEntity): Promise<File> {
-    return this.avatarModel.findByIdAndUpdate({ id }, avatar.toObject(), { new: true }).exec();
+  public async update(userId: string, avatar: AvatarEntity): Promise<File> {
+    return this.avatarModel.findOneAndUpdate(
+      { userId },
+      { fileName: avatar.fileName }, { new: true }
+    ).exec();
   }
 }

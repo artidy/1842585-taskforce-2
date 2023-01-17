@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { MulterModule } from '@nestjs/platform-express';
 import { databaseConfig, getMongoDbConfig } from '@taskforce/core';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
-import { ENV_FILE_PATH } from './app.constant';
+import { ASSETS_DIRECTORY, ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
-import { getMulterConfig, multerOptions } from '../config/multer.config';
+import { AvatarModule } from './avatar/avatar.module';
+import { getFullPathDirectory } from './app.functions';
 
 @Module({
   imports: [
@@ -14,15 +15,18 @@ import { getMulterConfig, multerOptions } from '../config/multer.config';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [ databaseConfig, multerOptions ],
+      load: [ databaseConfig ],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()
     ),
-    MulterModule.registerAsync(
-      getMulterConfig()
-    )
+    ServeStaticModule.forRoot({
+      rootPath: getFullPathDirectory(''),
+      serveRoot: `/${ASSETS_DIRECTORY}/`,
+      exclude: ['/api*'],
+    }),
+    AvatarModule,
   ]
 })
 export class AppModule {}

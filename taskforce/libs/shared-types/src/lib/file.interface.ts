@@ -1,5 +1,5 @@
 export interface File {
   id?: string;
   userId: string;
-  url: string;
+  fileName: string;
 }

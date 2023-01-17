@@ -4,6 +4,9 @@ import { plainToInstance } from 'class-transformer';
 import { EnvValidationMessage, MAX_PORT, MIN_PORT } from './app.constant';
 
 class EnvironmentsConfig {
+  @IsString({
+    message: EnvValidationMessage.DBNameRequired
+  })
   public MONGO_DB: string;
 
   @IsString({
@@ -32,16 +35,6 @@ class EnvironmentsConfig {
     message: EnvValidationMessage.DBBaseAuthRequired
   })
   public MONGO_AUTH_BASE: string;
-
-  @IsString({
-    message: EnvValidationMessage.UploadDirectoryRequired
-  })
-  public UPLOAD_DIRECTORY: string;
-
-  @IsNumber({}, {
-    message: EnvValidationMessage.MaxFileSize
-  })
-  public MAX_FILE_SIZE: number;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {

@@ -1,19 +1,16 @@
-import { ConfigService, registerAs } from '@nestjs/config';
-import { MulterModuleAsyncOptions } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface';
 
-export const multerOptions = registerAs('file', () => ({
-  destination: process.env.UPLOAD_DIRECTORY,
-  maxFileSize: process.env.MAX_FILE_SIZE,
-}));
+import { generateFileName, getFullPathDirectory } from '../app/app.functions';
 
-export function getMulterConfig(): MulterModuleAsyncOptions {
+export const getMulterConfig = (destination, maxFileSize): MulterOptions => {
   return {
-    useFactory: async (configService: ConfigService) => ({
-      dest: configService.get<string>('file.destination'),
-      limits: {
-        fileSize: configService.get<number>('file.maxFileSize'),
-      }
+    storage: diskStorage({
+      destination: getFullPathDirectory(destination),
+      filename: (req, file, cb) => cb(null, generateFileName(req, file))
     }),
-    inject: [ConfigService]
+    limits: {
+      fileSize: maxFileSize,
+    }
   }
 }

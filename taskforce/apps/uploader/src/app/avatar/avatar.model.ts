@@ -14,7 +14,7 @@ class AvatarModel extends Document implements File {
   public userId: string;
 
   @Prop()
-  public url: string;
+  public fileName: string;
 }
 
 const AvatarSchema = SchemaFactory.createForClass(AvatarModel);
