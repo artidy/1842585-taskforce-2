@@ -21,13 +21,6 @@ export class AuthUserMemoryRepository implements CRUDRepository<AuthUserEntity, 
     delete this.repository[id];
   }
 
-  public async findByEmail(email: string): Promise<User|null> {
-    const user = Object.values(this.repository)
-      .find((item) => item.email === email);
-
-    return user ?? null;
-  }
-
   public async findById(id: string): Promise<User|null> {
     const user = this.repository[id];
 

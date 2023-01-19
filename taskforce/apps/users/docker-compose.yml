@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: test
       MONGO_INITDB_DATABASE: typoteka-users
     ports:
-      - 27017:27017
+      - "27017:27017"
     healthcheck:
       test: [ "CMD-SHELL", "mongo mongodb:27017/test --quiet" ]
       interval: 10s
@@ -24,7 +24,7 @@ services:
     restart: always
     container_name: mongo-express
     ports:
-      - 8081:8081
+      - "8081:8081"
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: test

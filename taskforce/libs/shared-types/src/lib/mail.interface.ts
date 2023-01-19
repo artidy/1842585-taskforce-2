@@ -1,6 +1,5 @@
 import { Address } from 'nodemailer/lib/mailer';
 import {
-  AttachmentLikeObject,
   ISendMailOptions
 } from '@nestjs-modules/mailer/dist/interfaces/send-mail-options.interface';
 

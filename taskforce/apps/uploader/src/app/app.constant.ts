@@ -4,9 +4,7 @@ enum EnvValidationMessage {
   DBPortRequired = 'MongoDB port is required',
   DBUserRequired = 'MongoDB user is required',
   DBPasswordRequired = 'MongoDB password is required',
-  DBBaseAuthRequired = 'MongoDB authentication base is required',
-  UploadDirectoryRequired = 'Upload directory can\'t be empty',
-  MaxFileSize = 'Max file size can\'t be empty',
+  DBBaseAuthRequired = 'MongoDB authentication base is required'
 }
 
 const ENV_FILE_PATH = 'environments/.uploader.env';
