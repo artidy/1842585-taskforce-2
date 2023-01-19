@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+import { databaseConfig, getMongoDbConfig, jwtOptions } from '@taskforce/core';
 
 import { AuthModule } from './auth/auth.module';
 import { ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './env.validation';
-import { databaseConfig, getMongoDbConfig, jwtOptions } from '@taskforce/core';
 import { rabbitmqOptions } from '../config/rabbitmq.config';
 
 @Module({

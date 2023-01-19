@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SentMessageInfo } from 'nodemailer';
 import { MailerService } from '@nestjs-modules/mailer';
-
 import { Mail } from '@taskforce/shared-types';
-
 
 @Injectable()
 export class MailService {

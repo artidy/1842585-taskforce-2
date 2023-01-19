@@ -1,9 +1,9 @@
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Controller, Get, HttpCode, HttpStatus, Inject } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
+import { Mail } from '@taskforce/shared-types';
 
 import { MailService } from './mail.service';
-import { Mail } from '@taskforce/shared-types';
 import { mailOptions } from '../../config/mail.config';
 
 @ApiTags('mail')

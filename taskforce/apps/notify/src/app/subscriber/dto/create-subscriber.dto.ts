@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString } from 'class-validator';
 
-import { SUBSCRIBER_EMAIL_NOT_VALID } from '../../app.constant';
+import { SubscriberErrorMessages } from '../../app.constant';
 
 export class CreateSubscriberDto {
   @ApiProperty({
@@ -12,7 +12,7 @@ export class CreateSubscriberDto {
   @IsEmail(
     {},
     {
-      message: SUBSCRIBER_EMAIL_NOT_VALID
+      message: SubscriberErrorMessages.EmailNotValid
     })
   public email: string;
 

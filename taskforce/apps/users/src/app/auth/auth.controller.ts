@@ -1,5 +1,5 @@
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Body, Controller, Delete, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthService } from './auth.service';
@@ -15,6 +15,17 @@ import { LoggedUserRdo } from './rdo/logged-user.rdo';
 export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
+
+  @ApiResponse({
+    status: HttpStatus.OK, description: 'Вы успешно получили данные'
+  })
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  public async getUserById(@Param('id', MongoidValidationPipe) id: string) {
+    const user = await this.authService.getUserById(id);
+
+    return fillObject(UserRdo, user);
+  }
 
   @ApiResponse({
     status: HttpStatus.OK, description: 'Вы успешно авторизовались'

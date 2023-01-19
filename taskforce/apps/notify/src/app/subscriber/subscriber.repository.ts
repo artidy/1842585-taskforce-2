@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-
 import { CRUDRepository } from '@taskforce/core';
-import { SubscriberEntity } from './subscriber.entity';
 import { Subscriber } from '@taskforce/shared-types';
+
+import { SubscriberEntity } from './subscriber.entity';
 import { SubscriberModel } from './subscriber.model';
 
 @Injectable()

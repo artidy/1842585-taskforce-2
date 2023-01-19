@@ -3,7 +3,7 @@ import { File } from '@taskforce/shared-types';
 import * as fs from 'fs';
 
 import { AvatarRepository } from './avatar.repository';
-import { AVATAR_DIRECTORY, AVATAR_EXIST, AVATAR_IS_NOT_EXIST, FILE_IS_NOT_LOADED } from '../app.constant';
+import { AvatarSettings, AvatarErrorMessages } from '../app.constant';
 import { AvatarEntity } from './avatar.entity';
 import { getFullPathFile, getShortPathFile } from '../app.functions';
 
@@ -17,7 +17,7 @@ export class AvatarService {
     const existAvatar = await this.avatarRepository.findByUserId(userId);
 
     if (existAvatar) {
-      throw new Error(AVATAR_EXIST)
+      throw new Error(AvatarErrorMessages.Exist)
     }
 
     const avatar = new AvatarEntity({ id: '', userId, fileName });
@@ -29,23 +29,23 @@ export class AvatarService {
     const existAvatar = await this.avatarRepository.findByUserId(userId);
 
     if (!existAvatar) {
-      throw new Error(AVATAR_IS_NOT_EXIST);
+      throw new Error(AvatarErrorMessages.IsNotExist);
     }
 
     await this.avatarRepository.destroy(userId);
 
-    fs.unlinkSync(getFullPathFile(AVATAR_DIRECTORY, existAvatar.fileName));
+    fs.unlinkSync(getFullPathFile(AvatarSettings.Directory, existAvatar.fileName));
   }
 
   public async change(userId: string, fileName: string) {
     const existAvatar = await this.avatarRepository.findByUserId(userId);
 
     if (!existAvatar) {
-      throw new Error(AVATAR_IS_NOT_EXIST);
+      throw new Error(AvatarErrorMessages.IsNotExist);
     }
 
     if (!fileName) {
-      throw new Error(FILE_IS_NOT_LOADED);
+      throw new Error(AvatarErrorMessages.IsNotLoaded);
     }
 
     const avatar = new AvatarEntity({ id: existAvatar.id, userId, fileName });
@@ -60,6 +60,6 @@ export class AvatarService {
   public async getAvatarUrl(userId: string) {
     const avatar = await this.avatarRepository.findByUserId(userId);
 
-    return getShortPathFile(AVATAR_DIRECTORY, avatar.fileName);
+    return getShortPathFile(AvatarSettings.Directory, avatar.fileName);
   }
 }

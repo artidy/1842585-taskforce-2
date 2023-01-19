@@ -1,10 +1,10 @@
-import {CRUDRepository} from '@taskforce/core';
-import {Injectable} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
-import {User} from '@taskforce/shared-types';
+import { InjectModel } from '@nestjs/mongoose';
+import { CRUDRepository } from '@taskforce/core';
+import { User } from '@taskforce/shared-types';
 
 import {AuthUserEntity} from './auth-user.entity';
-import { InjectModel } from '@nestjs/mongoose';
 import { AuthUserModel } from './auth-user.model';
 
 @Injectable()
