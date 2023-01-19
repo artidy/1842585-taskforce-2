@@ -16,19 +16,23 @@ enum EnvValidationMessage {
   RabbitQueueRequired = 'Rabbit queue incorrect',
 }
 
-const MIN_PORT = 0;
-const MAX_PORT = 65535;
+enum SubscriberErrorMessages {
+  EmailNotValid = 'Неверный формат email',
+  Exist = 'Подписчик уже существует',
+  NotExist = 'Подписчик не существует'
+}
+
+enum Port {
+  Min = 0,
+  Max = 65535
+}
 const ENV_FILE_PATH = 'environments/.notify.env';
-const SUBSCRIBER_EMAIL_NOT_VALID = 'Неверный формат email';
-const SUBSCRIBER_EXIST = 'Подписчик уже существует';
-const SUBSCRIBER_NOT_EXIST = 'Подписчик не существует';
+const DEFAULT_PORT = 5555;
 
 export {
   EnvValidationMessage,
-  MIN_PORT,
-  MAX_PORT,
+  SubscriberErrorMessages,
+  Port,
   ENV_FILE_PATH,
-  SUBSCRIBER_EMAIL_NOT_VALID,
-  SUBSCRIBER_EXIST,
-  SUBSCRIBER_NOT_EXIST
+  DEFAULT_PORT,
 }

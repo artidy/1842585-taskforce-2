@@ -7,29 +7,35 @@ enum EnvValidationMessage {
   DBBaseAuthRequired = 'MongoDB authentication base is required'
 }
 
-const ENV_FILE_PATH = 'environments/.uploader.env';
-const MIN_PORT = 0;
-const MAX_PORT = 65535;
-const AVATAR_EXIST = 'Avatar already exist';
-const AVATAR_IS_NOT_EXIST = 'Avatar is not exist';
-const FILE_IS_NOT_LOADED = 'File is not loaded';
+enum Port {
+  Min = 0,
+  Max = 65535
+}
+
+enum AvatarErrorMessages {
+  Exist = 'Avatar already exist',
+  IsNotExist = 'Avatar is not exist',
+  IsNotLoaded = 'File is not loaded'
+}
+
+enum AvatarSettings {
+  Directory = '/images/avatars',
+  FieldName = 'avatar',
+  MaxSize = 500000,
+}
+
 const AVATAR_TYPES = /(jpg|jpeg|png)$/;
-const MAX_AVATAR_SIZE = 500000;
 const ASSETS_DIRECTORY = 'assets';
-const AVATAR_DIRECTORY = '/images/avatars';
-const AVATAR_FIELD_NAME = 'avatar';
+const ENV_FILE_PATH = 'environments/.uploader.env';
+const DEFAULT_PORT = 3333;
 
 export {
   EnvValidationMessage,
-  ENV_FILE_PATH,
-  MIN_PORT,
-  MAX_PORT,
-  AVATAR_EXIST,
-  AVATAR_IS_NOT_EXIST,
-  FILE_IS_NOT_LOADED,
+  Port,
+  AvatarErrorMessages,
+  AvatarSettings,
   AVATAR_TYPES,
-  MAX_AVATAR_SIZE,
   ASSETS_DIRECTORY,
-  AVATAR_DIRECTORY,
-  AVATAR_FIELD_NAME
+  ENV_FILE_PATH,
+  DEFAULT_PORT,
 }

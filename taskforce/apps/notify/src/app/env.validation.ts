@@ -1,7 +1,7 @@
 import { IsNumber, IsString, Max, Min, validateSync } from 'class-validator';
 import { plainToInstance } from 'class-transformer';
 
-import { EnvValidationMessage, MAX_PORT, MIN_PORT } from './app.constant';
+import { EnvValidationMessage, Port } from './app.constant';
 
 class EnvironmentsConfig {
   @IsString({
@@ -12,8 +12,8 @@ class EnvironmentsConfig {
   @IsNumber({}, {
     message: EnvValidationMessage.ServerPortInvalid
   })
-  @Min(MIN_PORT)
-  @Max(MAX_PORT)
+  @Min(Port.Min)
+  @Max(Port.Max)
   public SMTP_SERVER_PORT: number;
 
   @IsString({
@@ -44,8 +44,8 @@ class EnvironmentsConfig {
   @IsNumber({}, {
     message: EnvValidationMessage.DBPortRequired
   })
-  @Min(MIN_PORT)
-  @Max(MAX_PORT)
+  @Min(Port.Min)
+  @Max(Port.Max)
   public MONGO_PORT: number;
 
   @IsString({

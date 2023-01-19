@@ -1,11 +1,11 @@
 import { Controller } from '@nestjs/common';
+import { EventPattern } from '@nestjs/microservices';
+import { fillObject } from '@taskforce/core';
+import { CommandEvent } from '@taskforce/shared-types';
 
 import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
-import { fillObject } from '@taskforce/core';
 import { SubscriberRdo } from './rdo/subscriber.rdo';
-import { EventPattern } from '@nestjs/microservices';
-import { CommandEvent } from '@taskforce/shared-types';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 
 @Controller()

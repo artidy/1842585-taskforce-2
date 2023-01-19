@@ -8,6 +8,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 import { AppModule } from './app/app.module';
+import { DEFAULT_PORT } from './app/app.constant';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,7 +28,7 @@ async function bootstrap() {
     transform: true
   }));
 
-  const port = process.env.PORT || 6666;
+  const port = process.env.PORT || DEFAULT_PORT;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

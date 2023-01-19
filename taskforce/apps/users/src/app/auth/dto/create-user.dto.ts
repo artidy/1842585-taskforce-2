@@ -2,7 +2,7 @@ import {ApiProperty} from '@nestjs/swagger';
 import { IsEmail, IsEnum, IsISO8601, IsOptional, IsString } from 'class-validator';
 
 import {UserRole} from '@taskforce/shared-types';
-import { AUTH_USER_DATE_BIRTH_NOT_VALID, AUTH_USER_EMAIL_NOT_VALID } from '../../app.constant';
+import { UserErrorMessages } from '../../app.constant';
 
 export class CreateUserDto {
   @ApiProperty({
@@ -13,7 +13,7 @@ export class CreateUserDto {
   @IsEmail(
     {},
     {
-      message: AUTH_USER_EMAIL_NOT_VALID
+      message: UserErrorMessages.EmailNotValid
   })
   public email: string;
 
@@ -74,7 +74,7 @@ export class CreateUserDto {
   @IsISO8601(
     {},
     {
-      message: AUTH_USER_DATE_BIRTH_NOT_VALID
+      message: UserErrorMessages.DateBirthNotValid
   })
   public dataBirth?: string;
 }

@@ -10,6 +10,7 @@ import { ConfigService } from '@nestjs/config';
 import { getRabbitmqConfig } from '@taskforce/core';
 
 import { AppModule } from './app/app.module';
+import { DEFAULT_PORT } from './app/app.constant';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,7 +35,7 @@ async function bootstrap() {
 
   await app.startAllMicroservices();
 
-  const port = process.env.PORT || 5555;
+  const port = process.env.PORT || DEFAULT_PORT;
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`

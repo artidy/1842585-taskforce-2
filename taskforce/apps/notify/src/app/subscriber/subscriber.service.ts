@@ -6,7 +6,7 @@ import { Subscriber } from '@taskforce/shared-types';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { fillEntity } from '@taskforce/core';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
-import { SUBSCRIBER_EXIST, SUBSCRIBER_NOT_EXIST } from '../app.constant';
+import { SubscriberErrorMessages } from '../app.constant';
 
 @Injectable()
 export class SubscriberService {
@@ -22,7 +22,7 @@ export class SubscriberService {
     const existSubscriber = await this.subscriberRepository.findByEmail(dto.email);
 
     if (existSubscriber) {
-      throw new Error(SUBSCRIBER_EXIST);
+      throw new Error(SubscriberErrorMessages.Exist);
     }
 
     const subscriber = new SubscriberEntity({ ...dto, id: '' });
@@ -42,7 +42,7 @@ export class SubscriberService {
     const existSubscriber: Subscriber = await this.subscriberRepository.findById(id);
 
     if (!existSubscriber) {
-      throw new Error(SUBSCRIBER_NOT_EXIST);
+      throw new Error(SubscriberErrorMessages.NotExist);
     }
 
     fillEntity<UpdateSubscriberDto, Subscriber>(dto, existSubscriber);
