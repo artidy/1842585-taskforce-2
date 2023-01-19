@@ -106,4 +106,8 @@ export class AuthService {
   public async delete(id: string) {
     return this.authUserRepository.destroy(id);
   }
+
+  public async getUserById(id: string) {
+    return this.authUserRepository.findById(id);
+  }
 }
