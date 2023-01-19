@@ -10,6 +10,7 @@ import { uploaderConfig } from '../config/uploader.config';
 import { usersConfig } from '../config/users.config';
 import { getHttpConfig, httpOptions } from '../config/http.config';
 import { UsersModule } from './users/users.module';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { UsersModule } from './users/users.module';
       validate: validateEnvironments,
     }),
     HttpModule.registerAsync(getHttpConfig()),
-    UsersModule
+    UsersModule,
+    TasksModule,
   ]
 })
 export class AppModule {}

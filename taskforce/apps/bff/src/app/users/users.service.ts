@@ -3,12 +3,6 @@ import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { UserRdo } from './rdo/user.rdo';
-import { LoginUserDto } from './dto/login-user.dto';
-import { LoggedUserRdo } from './rdo/logged-user.rdo';
-import { DATA_PATH } from '../app.constant';
-
 @Injectable()
 export class UsersService {
   private readonly serviceAddress: string;
@@ -21,24 +15,24 @@ export class UsersService {
       this.usersConfig.get<number>('users.port')}`;
   }
 
-  public async register(dto: CreateUserDto) {
+  public async register(user) {
     const registerPath = 'api/auth/register';
 
     const { data } = await firstValueFrom(
-      this.httpService.post<UserRdo>(
+      this.httpService.post(
         `${this.serviceAddress}/${registerPath}`,
-        dto
+        user
       )
     )
 
     return data;
   }
 
-  public async login(user: LoginUserDto) {
+  public async login(user) {
     const loginPath = 'api/auth/login';
 
     const { data } = await firstValueFrom(
-      this.httpService.post<LoggedUserRdo>(
+      this.httpService.post(
         `${this.serviceAddress}/${loginPath}`,
         user
       )
@@ -51,7 +45,7 @@ export class UsersService {
     const userPath = 'api/auth';
 
     const { data } = await firstValueFrom(
-      this.httpService.get<UserRdo>(`${this.serviceAddress}/${userPath}/${id}`)
+      this.httpService.get(`${this.serviceAddress}/${userPath}/${id}`)
     )
 
     return data;

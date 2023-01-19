@@ -1,8 +1,6 @@
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 import { UsersService } from './users.service';
 
 @ApiTags('users')
@@ -16,8 +14,8 @@ export class UsersController {
   })
   @Post('login')
   @HttpCode(HttpStatus.OK)
-  public async login(@Body() dto: LoginUserDto) {
-    return this.usersService.login(dto);
+  public async login(@Body() user) {
+    return this.usersService.login(user);
   }
 
   @ApiResponse({
@@ -25,7 +23,7 @@ export class UsersController {
   })
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
-  public async create(@Body() dto: CreateUserDto) {
-    return this.usersService.register(dto);
+  public async create(@Body() user) {
+    return this.usersService.register(user);
   }
 }
