@@ -4,5 +4,4 @@ export enum CommandEvent {
   GetSubscriberById = 'getSubscriberById',
   DeleteSubscriber = 'deleteSubscriber',
   UpdateSubscriber = 'updateSubscriber',
-  AddTask = 'addTask',
 }

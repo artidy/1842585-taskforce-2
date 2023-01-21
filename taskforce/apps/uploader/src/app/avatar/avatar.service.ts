@@ -53,10 +53,6 @@ export class AvatarService {
     return this.avatarRepository.update(userId, avatar);
   }
 
-  public async getByUserId(userId: string) {
-    return this.avatarRepository.findByUserId(userId);
-  }
-
   public async getAvatarUrl(userId: string) {
     const avatar = await this.avatarRepository.findByUserId(userId);
 

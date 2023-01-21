@@ -41,13 +41,4 @@ export class UsersService {
     return data;
   }
 
-  public async getUserById(id: string) {
-    const userPath = 'api/auth';
-
-    const { data } = await firstValueFrom(
-      this.httpService.get(`${this.serviceAddress}/${userPath}/${id}`)
-    )
-
-    return data;
-  }
 }
