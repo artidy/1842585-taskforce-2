@@ -40,14 +40,6 @@ export class CandidateRepository implements CRUDRepository<CandidateEntity, numb
     });
   }
 
-  public async findByTaskId(taskId: number): Promise<Candidate[]> {
-    return this.prisma.candidate.findMany({
-      where: {
-        taskId
-      }
-    });
-  }
-
   update(_id: number, _item: CandidateEntity): Promise<Candidate> {
     return Promise.resolve(undefined);
   }
