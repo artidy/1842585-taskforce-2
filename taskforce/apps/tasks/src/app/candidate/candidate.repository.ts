@@ -48,7 +48,7 @@ export class CandidateRepository implements CRUDRepository<CandidateEntity, numb
     });
   }
 
-  update(id: number, item: CandidateEntity): Promise<Candidate> {
+  update(_id: number, _item: CandidateEntity): Promise<Candidate> {
     return Promise.resolve(undefined);
   }
 }

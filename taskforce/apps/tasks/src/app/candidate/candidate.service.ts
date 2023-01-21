@@ -21,10 +21,6 @@ export class CandidateService {
     return this.candidateRepository.findByUserId(userId);
   }
 
-  public async findByTaskId(taskId: number): Promise<Candidate[]> {
-    return this.candidateRepository.findByTaskId(taskId);
-  }
-
   public async delete(id: number): Promise<void> {
     return this.candidateRepository.destroy(id);
   }
