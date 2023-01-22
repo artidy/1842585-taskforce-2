@@ -33,7 +33,7 @@ enum EmailSubscriber {
 }
 
 const ENV_FILE_PATH = 'environments/.notify.env';
-const DEFAULT_PORT = 5555;
+const DEFAULT_PORT = 3333;
 
 export {
   EnvValidationMessage,

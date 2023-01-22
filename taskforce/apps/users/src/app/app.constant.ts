@@ -23,7 +23,7 @@ enum UserErrorMessages {
 
 const RABBITMQ_SERVICE_NAME = 'RABBITMQ_SERVICE';
 const ENV_FILE_PATH = 'environments/.users.env';
-const DEFAULT_PORT = 6666;
+const DEFAULT_PORT = 3333;
 
 export {
   EnvValidationMessage,
