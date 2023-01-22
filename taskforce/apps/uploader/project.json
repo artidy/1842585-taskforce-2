@@ -13,7 +13,8 @@
         "outputPath": "dist/apps/uploader",
         "main": "apps/uploader/src/main.ts",
         "tsConfig": "apps/uploader/tsconfig.app.json",
-        "assets": ["apps/uploader/src/assets"]
+        "assets": ["apps/uploader/src/assets"],
+        "generatePackageJson": true
       },
       "configurations": {
         "production": {
