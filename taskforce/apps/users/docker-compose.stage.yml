@@ -1,0 +1,42 @@
+version: '3.5'
+services:
+  mongodb:
+    image: mongo:5.0.14
+    restart: always
+    container_name: mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: test
+      MONGO_INITDB_DATABASE: typoteka-users
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: [ "CMD-SHELL", "mongo mongodb:27017/test --quiet" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    volumes:
+      - ./db:/data/db
+
+  mongodb-express:
+    image: mongo-express:1.0.0-alpha.4
+    restart: always
+    container_name: mongo-express
+    ports:
+      - "8081:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: test
+      ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb:27017/
+
+  taskforce.users:
+    image: taskforce.users
+    depends_on:
+      - mongodb
+      - mongodb-express
+    container_name: taskforce.users.service
+    ports:
+      - "3333:3333"
+    env_file:
+      - ../../environments/.users.docker.env

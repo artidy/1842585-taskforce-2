@@ -18,7 +18,7 @@ enum EnvValidationMessage {
 }
 
 const ENV_FILE_PATH = 'environments/.bff.env';
-const DEFAULT_PORT = 7777;
+const DEFAULT_PORT = 3333;
 
 export {
   Microservices,
