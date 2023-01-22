@@ -1,0 +1,9 @@
+version: '3.5'
+services:
+  taskforce.bff:
+    image: taskforce.bff
+    container_name: taskforce.bff.service
+    ports:
+      - "3337:3333"
+    env_file:
+      - ../../environments/.bff.docker.env
