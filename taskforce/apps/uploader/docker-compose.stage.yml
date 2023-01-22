@@ -1,0 +1,41 @@
+version: '3.5'
+services:
+  mongodb:
+    image: mongo:5.0.14
+    restart: always
+    container_name: mongodb_uploader
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: test
+      MONGO_INITDB_DATABASE: taskforce-uploader
+    ports:
+      - "27019:27017"
+    volumes:
+      - ./db:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017 --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mongodb-express:
+    image: mongo-express:1.0.0-alpha.4
+    restart: always
+    container_name: mongo-express-uploader
+    ports:
+      - "1086:8081"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: test
+      ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb:27017/
+
+  taskforce.uploader:
+    image: taskforce.uploader
+    depends_on:
+      - mongodb
+      - mongodb-express
+    container_name: taskforce.uploader.service
+    ports:
+      - "3334:3333"
+    env_file:
+      - ../../environments/.uploader.docker.env
