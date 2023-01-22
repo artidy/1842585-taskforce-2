@@ -7,10 +7,14 @@ import { SubscriberService } from './subscriber.service';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
 import { SubscriberRdo } from './rdo/subscriber.rdo';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
+import { MailService } from '../mail/mail.service';
 
 @Controller()
 export class SubscriberController {
-  constructor(private readonly subscriberService: SubscriberService) {}
+  constructor(
+    private readonly subscriberService: SubscriberService,
+    private readonly mailService: MailService
+  ) {}
 
   @EventPattern({ cmd: CommandEvent.GetAllSubscribers })
   public async getAll() {
@@ -29,6 +33,7 @@ export class SubscriberController {
   @EventPattern({ cmd: CommandEvent.GetSubscriberById })
   public async getById(id: string) {
     const subscriber = await this.subscriberService.findById(id);
+    await this.mailService.sendNotifyNewSubscriber(subscriber);
 
     return fillObject(SubscriberRdo, subscriber);
   }
