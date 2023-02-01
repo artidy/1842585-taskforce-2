@@ -1,5 +1,7 @@
 import { ConfigService, registerAs } from '@nestjs/config';
 import { MailerAsyncOptions } from '@nestjs-modules/mailer/dist/interfaces/mailer-async-options.interface';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import * as path from 'path';
 
 export const mailOptions = registerAs('mail', () => ({
   server: process.env.SMTP_SERVER,
@@ -17,11 +19,21 @@ export function getMailConfig(): MailerAsyncOptions {
         port: configService.get<number>('mail.port'),
         ignoreTLS: true,
         secure: false,
+        auth: {
+          user: configService.get<string>('mail.user'),
+          pass: configService.get<string>('mail.password')
+        }
       },
       defaults: {
-        from: `"No Reply" <${ configService.get<string>('mail.email') }>`,
+        from: configService.get<string>('mail.email'),
       },
-      preview: true,
+      template: {
+        dir: path.resolve(__dirname, 'assets'),
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true
+        }
+      }
     }),
     inject: [ConfigService]
   }

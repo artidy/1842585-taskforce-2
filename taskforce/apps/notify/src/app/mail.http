@@ -1,2 +1,0 @@
-# Send emails
-GET http://localhost:5555/api/mail/ HTTP/1.1

@@ -26,13 +26,20 @@ enum Port {
   Min = 0,
   Max = 65535
 }
+
+enum EmailSubscriber {
+  RegisteredSubject = 'Вы успешно зарегистрировались.',
+  RegisteredTemplate = './add-subscriber'
+}
+
 const ENV_FILE_PATH = 'environments/.notify.env';
-const DEFAULT_PORT = 5555;
+const DEFAULT_PORT = 3333;
 
 export {
   EnvValidationMessage,
   SubscriberErrorMessages,
   Port,
+  EmailSubscriber,
   ENV_FILE_PATH,
   DEFAULT_PORT,
 }
